@@ -1,17 +1,10 @@
-# Show the data
-# Intesity
-# Density with 
-# Quadrat counting --> homogenous
-# Quadrat test CSR  --> p value --> not complete spatial randomness
-# Kest --> 
-# Kinhom for inhomogenous
-
+# Ismail Sunni
 rm(list = ls())  # Clear data
+
+# Load library
 library(splancs)
 library(spatstat)
 library(geojsonio)
-# library(OpenStreetMap)
-# library(rgdal)
 
 # Set working directory
 setwd("/home/ismailsunni/dev/r/eq-project")
@@ -19,7 +12,7 @@ setwd("/home/ismailsunni/dev/r/eq-project")
 # Data loading
 path <- "eq-filtered.geojson"
 eqsp <- geojson_read(path, what='sp')  # Read GeoJSON as SpatialPointsDataFrame
-tail(eqsp)  
+tail(eqsp)  # Show the content of the data
 # eq <- as.ppp.SpatialPointsDataFrame(eq)  # Convert to ppp
 eq <- as(eqsp, "ppp")  # Convert to ppp
 
@@ -80,6 +73,7 @@ eq2016 = subset(eqbig, year==2016)
 eq2017 = subset(eqbig, year==2017)
 eq2018 = subset(eqbig, year==2018)
 
+# Showing big earthquake per year
 par(mfrow=c(2,2))
 title <- 'Big Earthquake in Indonesia '
 plot(unmark(eq2015), main=paste(title, '(2015)', eq2015$n, 'events'), bg="red", pch=21, cex=4)  # Ploting without marks
@@ -91,6 +85,7 @@ plot(bd, add=TRUE)
 plot(unmark(eq2018), main=paste(title, '(2018)', eq2018$n, 'events'), bg="red", pch=21, cex=4)  # Ploting without marks
 plot(bd, add=TRUE)
 
+# Showing big earthquake per year with magnitude
 par(mfrow=c(2,2))
 title <- 'Earthquake in Indonesia (magnitude)'
 plot(eq2015, which.marks = 'magnitude', main=paste(title, '(2015)')  # Plot with magnitude
@@ -138,4 +133,4 @@ Ei <- envelope (eq, Kinhom, nsim=39)
 plot(Ei)
 
 # Area Interaction
-ppm(unmark(eq), ~1, AreaInter(r=1))
+x = ppm(unmark(eq), ~1, AreaInter(r=1))
